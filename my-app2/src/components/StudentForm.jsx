@@ -1,64 +1,43 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-function StudentForm({ addStudent }) {
+function StudentForm() {
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [course, setCourse] = useState("");
-  const [errors, setErrors] = useState({});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm();
 
-  const validate = () => {
-    let newErrors = {};
-
-    if (!name) newErrors.name = "Name is required";
-
-    if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!email.includes("@")) {
-      newErrors.email = "Invalid email format";
-    }
-
-    if (!course) newErrors.course = "Course is required";
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (validate()) {
-      addStudent({ id: Date.now(), name, email, course });
-      setName("");
-      setEmail("");
-      setCourse("");
-      setErrors({});
-    }
+  const onSubmit = (data) => {
+    console.log(data);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
 
       <input
-        type="text"
         placeholder="Name"
-        onChange={(e) => setName(e.target.value)}
+        {...register("name", { required: "Name is required" })}
       />
-      {errors.name && <p>{errors.name}</p>}
+      <p>{errors.name?.message}</p>
 
       <input
-        type="email"
         placeholder="Email"
-        onChange={(e) => setEmail(e.target.value)}
+        {...register("email", {
+          required: "Email is required",
+          pattern: {
+            value: /^\S+@\S+$/i,
+            message: "Invalid email format"
+          }
+        })}
       />
-      {errors.email && <p>{errors.email}</p>}
+      <p>{errors.email?.message}</p>
 
       <input
-        type="text"
         placeholder="Course"
-        onChange={(e) => setCourse(e.target.value)}
+        {...register("course", { required: "Course is required" })}
       />
-      {errors.course && <p>{errors.course}</p>}
+      <p>{errors.course?.message}</p>
 
       <button type="submit">Submit</button>
 
