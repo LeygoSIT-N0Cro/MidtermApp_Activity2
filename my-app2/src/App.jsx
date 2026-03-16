@@ -7,9 +7,11 @@ import StudentDetails from "./components/StudentDetails";
 function App() {
   return (
     <Router>
+
       <Navbar />
 
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/student/:id" element={<StudentDetails />} />
