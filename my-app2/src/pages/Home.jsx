@@ -1,10 +1,10 @@
 import StudentList from "../components/StudentList";
 
-function Home() {
+function Home({ students }) {
   return (
     <div>
       <h1>Student List</h1>
-      <StudentList />
+      <StudentList students={students} />
     </div>
   );
 }

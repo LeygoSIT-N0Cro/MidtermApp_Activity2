@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function StudentForm() {
+function StudentForm({ addStudent }) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -28,7 +28,11 @@ function StudentForm() {
     e.preventDefault();
 
     if (validate()) {
-      alert("Student Registered!");
+      addStudent({ id: Date.now(), name, email, course });
+      setName("");
+      setEmail("");
+      setCourse("");
+      setErrors({});
     }
   };
 
