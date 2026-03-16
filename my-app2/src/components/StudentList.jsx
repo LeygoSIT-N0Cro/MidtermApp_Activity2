@@ -1,19 +1,24 @@
 import { Link } from "react-router-dom";
 
-function StudentList({ students }) {
+function StudentList() {
+
+  const students = [
+    { id: 1, name: "Alice", course: "BSIT" },
+    { id: 2, name: "Bob", course: "BSCS" }
+  ];
+
   return (
     <div>
-      {students.length === 0 ? (
-        <p>No students registered.</p>
-      ) : (
-        <ul>
-          {students.map((student) => (
-            <li key={student.id}>
-              <Link to={`/student/${student.id}`}>{student.name}</Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {students.map((student) => (
+        <div key={student.id}>
+          <h3>{student.name}</h3>
+          <p>{student.course}</p>
+
+          <Link to={`/student/${student.id}`}>
+            View Details
+          </Link>
+        </div>
+      ))}
     </div>
   );
 }
